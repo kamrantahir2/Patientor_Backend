@@ -12,10 +12,22 @@ const getPatients = (): NonSensitivePatientData[] => {
   }));
 };
 
+const getPatientById = (id: string): Patient => {
+  const patient: Patient | undefined = patientsData.find(
+    (patient) => patient.id === id
+  );
+
+  if (patient === undefined) {
+    throw new Error(`Patient with ${id} not found`);
+  }
+
+  return patient;
+};
+
 const addPatients = (patient: NewPatientEntry): Patient => {
   const newPatient: Patient = { ...patient, id: uuid() };
   patientsData.push(newPatient);
   return newPatient;
 };
 
-export default { getPatients, addPatients };
+export default { getPatients, addPatients, getPatientById };
